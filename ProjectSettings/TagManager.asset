@@ -8,6 +8,8 @@ TagManager:
   - LevelManager
   - Dimmer
   - EnemyStrong
+  - Wall
+  - Nothing
   layers:
   - Default
   - TransparentFX
@@ -15,7 +17,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Wall
   - 
   - 
   - 

@@ -17,13 +17,13 @@ public class MouseCamLook_ThirdPerson : MonoBehaviour
     float initialAngle;
     float initialAngleHead;
 
+    
     // Use this for initialization
     void Start()
     {
         character = this.transform.parent.gameObject.transform.parent.gameObject;
         head = this.transform.parent.gameObject;
         initialAngle = character.transform.localEulerAngles.y;
-
     }
 
     // Update is called once per frame
@@ -45,5 +45,9 @@ public class MouseCamLook_ThirdPerson : MonoBehaviour
         head.transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
         character.transform.localRotation = Quaternion.AngleAxis(initialAngle + mouseLook.x, Vector3.up);
 
+      
     }
+
+    
+
 }

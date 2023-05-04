@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnterBuilding : MonoBehaviour
 {
     public GameObject player;
+    public GameObject decoy;
     public Transform building;
 
     [Header("Events")]

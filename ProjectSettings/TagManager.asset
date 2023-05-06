@@ -10,6 +10,7 @@ TagManager:
   - EnemyStrong
   - Wall
   - Nothing
+  - Collectable
   layers:
   - Default
   - TransparentFX
@@ -17,9 +18,9 @@ TagManager:
   - 
   - Water
   - UI
-  - Wall
-  - 
-  - 
+  - Collectable
+  - Player
+  - Interactable
   - 
   - 
   - 

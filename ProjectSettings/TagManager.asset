@@ -11,6 +11,9 @@ TagManager:
   - Wall
   - Nothing
   - Collectable
+  - CheckPoint
+  - GameManager
+  - StartPoint
   layers:
   - Default
   - TransparentFX

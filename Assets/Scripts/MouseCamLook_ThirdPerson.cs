@@ -45,9 +45,5 @@ public class MouseCamLook_ThirdPerson : MonoBehaviour
         head.transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
         character.transform.localRotation = Quaternion.AngleAxis(initialAngle + mouseLook.x, Vector3.up);
 
-      
     }
-
-    
-
 }

@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 [CreateAssetMenu] // makes creating an instance of this via the Create RMB menu
-
-public class InventoryItem : MonoBehaviour
+public class InventoryItem : ScriptableObject
 {
     [SerializeField] // makes private variables show up in the inspector
     private string g_name = "Enter Item Name...";

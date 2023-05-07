@@ -7,6 +7,9 @@ public class TriggerAnim : MonoBehaviour
     public GameObject thingToAnimate;
     public Animator animToPlay;
     public string triggerName;
+    public bool playRepeatedly;
+    public bool playedOnce;
+
 
     [Header("Events")]
     public GameEvent onEndAnim;
@@ -16,9 +19,19 @@ public class TriggerAnim : MonoBehaviour
         thingToAnimate.GetComponent<Animator>().SetTrigger(triggerName);
     }
 
-   public void PlayNextAnim()
-   {
-       // call something on a TARGET object.
-       onEndAnim.Raise(this, null);
-   }
+    public void PlayNextAnim()
+    {
+        // call something on a TARGET object.
+        if (!playedOnce || playRepeatedly)
+        {
+            playedOnce = true;
+            onEndAnim.Raise(this, null);
+        }
+
+    }
+
+    public void ResetAnim()
+    {
+        thingToAnimate.GetComponent<Animator>().SetTrigger("ResetThisAnim");
+    }
 }

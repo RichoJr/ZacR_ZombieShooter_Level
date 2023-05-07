@@ -39,8 +39,10 @@ public class PickupThing : MonoBehaviour
                 AddScoreFromPickup();
             }
 
+            
             CollectionEvent();
             Destroy(gameObject);
+
 
             if (this.GetComponent<InvItemID>() != null)
             {

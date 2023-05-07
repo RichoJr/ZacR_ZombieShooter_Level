@@ -8,6 +8,8 @@ public class ObjSlotUI : MonoBehaviour
     public Text o_text;
     //public Text o_parts;
     public Button o_button;
+    public int o_obTrack;
+    public int o_obTotal;
     public int o_ID;
     //string stepsDisplay;
 
@@ -17,7 +19,6 @@ public class ObjSlotUI : MonoBehaviour
     {
         ClearObj();
     }
-
     public void SetObj(GameObjective obj)
     {
         this.o_obj = obj;
@@ -27,7 +28,17 @@ public class ObjSlotUI : MonoBehaviour
             return;
         }
 
-        this.o_text.text = obj.objectiveName;
+        this.o_obTrack = obj.objectiveStep;
+        this.o_obTotal = obj.objectivePartsTotal;
+
+        if(o_obTotal > 1)
+        {
+            this.o_text.text = obj.objectiveName + " " + o_obTrack + " / " + o_obTotal;
+        }
+        else
+        {
+            this.o_text.text = obj.objectiveName;
+        }
         this.o_ID = obj.objectiveID;
         this.o_button.interactable = true;
     }

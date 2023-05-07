@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameObjective : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class GameObjective : MonoBehaviour
     public GameEvent onObjectiveCompleted;
 
     private GameObject objManager;
+    private int objCounter;
+
+    public ObjSlotUI objTracker;
 
     private void Awake()
     {
@@ -44,5 +48,11 @@ public class GameObjective : MonoBehaviour
             objManager.GetComponent<ObjectiveTracker>().RemoveObj(objectiveID);
             Debug.Log("Objective " + objectiveName + " complete.");
         }
+        else
+        {
+            objManager.GetComponent<ObjectiveTracker>().RemoveObj(objectiveID);
+            objManager.GetComponent<ObjectiveTracker>().AddObjective(this);
+        }
+        
     }
 }

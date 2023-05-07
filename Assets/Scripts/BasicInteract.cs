@@ -41,6 +41,8 @@ public class BasicInteract : MonoBehaviour
     public bool interactablePromptsText; // These are all a checkbox to see IF the player wants a popup or not.
     public Text intPromptTxt;
     public string intMessage;
+    public Text doorPromptTxt;
+    public string doorMessage;
     public bool collectablePromptsText;
     public Text collectPromptTxt;
     public string collectMessage;
@@ -100,6 +102,19 @@ public class BasicInteract : MonoBehaviour
                 }
 
             }
+            else if (hitObject.collider.tag == "Door") // If that collider has 'Interact' tag - Implies a switch / device, not an object to pick up
+            {
+                // THIS STUFF IS ABOUT FIRING PROMPTS FOR SOMETHING YOU CAN INTERACT WITH IN THE WORLD
+                rayHit = true;
+                interactiveObject = hitObject.collider.gameObject;
+                targetIsInteractive = true;
+                if (interactablePromptsText)
+                {
+                    doorPromptTxt.enabled = true;
+                    doorPromptTxt.text = doorMessage;
+                }
+
+            }
             else if (hitObject.collider.tag == "Collectable") // If that collider has 'Collectable' tag - Implies thing to pick up and keep
             {
                 // THIS STUFF IS ABOUT FIRING PROMPTS FOR SOMETHING YOU CAN TAKE TO INVENTORY
@@ -139,6 +154,7 @@ public class BasicInteract : MonoBehaviour
             targetIsInteractive = false;
             collectPromptTxt.enabled = false;
             intPromptTxt.enabled = false;
+            doorPromptTxt.enabled = false;
             if (carriedItem == null)
             {
                 carryPromptTxt.enabled = false;

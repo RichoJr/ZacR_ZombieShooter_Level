@@ -15,6 +15,7 @@ TagManager:
   - GameManager
   - StartPoint
   - Interact
+  - Door
   layers:
   - Default
   - TransparentFX

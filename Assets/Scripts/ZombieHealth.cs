@@ -8,7 +8,10 @@ public class ZombieHealth : MonoBehaviour
     public float maxZombieHealth = 100.0f;
 
     public Rigidbody rb;
-    
+
+    [Header("Events")]
+    public GameEvent onZombieDies;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +21,7 @@ public class ZombieHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void damageZombie(float incomingDamage)
@@ -28,8 +31,9 @@ public class ZombieHealth : MonoBehaviour
         Debug.Log(zombieHealth);
         if (zombieHealth <= 0)
         {
+            onZombieDies.Raise(this, null);
             Destroy(gameObject);
         }
-        
+
     }
 }

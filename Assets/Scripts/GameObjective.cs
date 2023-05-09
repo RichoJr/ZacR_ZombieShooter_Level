@@ -11,6 +11,7 @@ public class GameObjective : MonoBehaviour
     public bool objectiveCompleted;
     public int objectivePartsTotal;
     public int objectiveStep;
+    
 
     [Header("Events")]
     public GameEvent onObjectiveActivated;
@@ -55,4 +56,5 @@ public class GameObjective : MonoBehaviour
         }
         
     }
+
 }

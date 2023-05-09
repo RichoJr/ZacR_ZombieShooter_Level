@@ -86,7 +86,8 @@ public class BasicInteract : MonoBehaviour
             }
         }
 
-        g_ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Raycast From Mouse Position 
+        
+        g_ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Raycast From Mouse Position
         if (Physics.Raycast(g_ray, out hitObject, rayLength, layerToHit)) // If raycast hits collider... 
         {
             if (hitObject.collider.tag == "Interact") // If that collider has 'Interact' tag - Implies a switch / device, not an object to pick up
@@ -99,12 +100,13 @@ public class BasicInteract : MonoBehaviour
                 {
                     intPromptTxt.enabled = true;
                     intPromptTxt.text = intMessage;
+                    CheckInteractCanvas();
                 }
 
             }
-            else if (hitObject.collider.tag == "Door") // If that collider has 'Interact' tag - Implies a switch / device, not an object to pick up
+            else if (hitObject.collider.tag == "Door") // If that collider has 'Door' tag - Implies a switch / device, not an object to pick up
             {
-                // THIS STUFF IS ABOUT FIRING PROMPTS FOR SOMETHING YOU CAN INTERACT WITH IN THE WORLD
+                // THIS STUFF IS ABOUT FIRING PROMPTS FOR SOMETHING YOU CAN OPEN WITH IN THE WORLD
                 rayHit = true;
                 interactiveObject = hitObject.collider.gameObject;
                 targetIsInteractive = true;
@@ -112,6 +114,7 @@ public class BasicInteract : MonoBehaviour
                 {
                     doorPromptTxt.enabled = true;
                     doorPromptTxt.text = doorMessage;
+                    CheckInteractCanvas();
                 }
 
             }
@@ -125,6 +128,7 @@ public class BasicInteract : MonoBehaviour
                 {
                     collectPromptTxt.enabled = true;
                     collectPromptTxt.text = collectMessage;
+                    CheckInteractCanvas();
                 }
             }
 
@@ -139,6 +143,7 @@ public class BasicInteract : MonoBehaviour
                 {
                     carryPromptTxt.enabled = true;
                     carryPromptTxt.text = carryMessage;
+                    CheckInteractCanvas();
                 }
             }
         }
@@ -259,5 +264,31 @@ public class BasicInteract : MonoBehaviour
     {
         onInvItemTaken?.Invoke(pickedUp.GetComponent<InvItemID>().ID); // ADD TO INVENTORY LIST
     }
-
+     public void CheckInteractCanvas()
+     {
+        if (intPromptTxt.enabled == true)
+        {
+            doorPromptTxt.enabled = false;
+            collectPromptTxt.enabled = false;
+            carryPromptTxt.enabled = false;
+        }
+        else if (doorPromptTxt.enabled == true)
+        {
+            intPromptTxt.enabled = false;
+            collectPromptTxt.enabled = false;
+            carryPromptTxt.enabled = false;
+        }
+        else if (collectPromptTxt.enabled == true)
+        {
+            intPromptTxt.enabled = false;
+            doorPromptTxt.enabled = false;
+            carryPromptTxt.enabled = false;
+        }
+        else if (carryPromptTxt.enabled == true)
+        {
+            intPromptTxt.enabled = false;
+            doorPromptTxt.enabled = false;
+            collectPromptTxt.enabled = false;
+        }
+     }
 }

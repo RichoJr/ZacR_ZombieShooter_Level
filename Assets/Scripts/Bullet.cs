@@ -29,9 +29,11 @@ public class Bullet : MonoBehaviour
     {
         if(collision.gameObject.tag == "Enemy")
         {
-            LevelManager.GetComponent<LevelManager>().score++;
-            Instantiate(splatEffect, collision.transform.position, Quaternion.identity);
-            Destroy(collision.gameObject);
+            //LevelManager.GetComponent<LevelManager>().score++;
+            //Instantiate(splatEffect, collision.transform.position, Quaternion.identity);
+            //Destroy(collision.gameObject);
+            zHealth = collision.gameObject.GetComponent<ZombieHealth>();
+            zHealth.damageZombie(damage);
         }
         
         if(collision.gameObject.tag == "EnemyStrong")

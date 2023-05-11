@@ -6,7 +6,7 @@ public class DisableCollider : MonoBehaviour
 {
     public Collider colliderToEnable;
 
-    private void OnTriggerEnter(Collider other)
+    public void ToggleCollider(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {

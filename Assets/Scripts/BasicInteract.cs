@@ -57,6 +57,9 @@ public class BasicInteract : MonoBehaviour
     private Transform carryItemPosition;
     private Rigidbody rbOfCarriedItem;
 
+    private Ray d_ray = new Ray();
+    public RaycastHit dropHitObject;
+    public LayerMask dropLayerToHit;
 
     void Start()
     {
@@ -67,6 +70,7 @@ public class BasicInteract : MonoBehaviour
         rayHit = false;
         canInteract = false;
         CrosshairDot = GameObject.Find("CrosshairDot").GetComponent<Image>();
+        carriedItem = null;
     }
 
     void Update()
@@ -86,8 +90,7 @@ public class BasicInteract : MonoBehaviour
             }
         }
 
-        
-        g_ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Raycast From Mouse Position
+        g_ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Raycast From Mouse Position 
         if (Physics.Raycast(g_ray, out hitObject, rayLength, layerToHit)) // If raycast hits collider... 
         {
             if (hitObject.collider.tag == "Interact") // If that collider has 'Interact' tag - Implies a switch / device, not an object to pick up
@@ -146,23 +149,23 @@ public class BasicInteract : MonoBehaviour
                     CheckInteractCanvas();
                 }
             }
-        }
-        else // IF RAYCAST DOESN'T HIT ONE OF THOSE THINGS, RESET RAYCAST AND DEACTIVATE ALL PROMPTS
-        {
-            //ResetPrompts();
-
-            rayHit = false;
-            interactiveObject = null;
-            canInteract = false;
-            targetIsCarryable = false;
-            targetIsCollctable = false;
-            targetIsInteractive = false;
-            collectPromptTxt.enabled = false;
-            intPromptTxt.enabled = false;
-            doorPromptTxt.enabled = false;
-            if (carriedItem == null)
+            else // IF RAYCAST DOESN'T HIT ONE OF THOSE THINGS, RESET RAYCAST AND DEACTIVATE ALL PROMPTS
             {
-                carryPromptTxt.enabled = false;
+                //ResetPrompts();
+
+                rayHit = false;
+                interactiveObject = null;
+                canInteract = false;
+                targetIsCarryable = false;
+                targetIsCollctable = false;
+                targetIsInteractive = false;
+                collectPromptTxt.enabled = false;
+                intPromptTxt.enabled = false;
+                doorPromptTxt.enabled = false;
+                if (carriedItem == null)
+                {
+                    carryPromptTxt.enabled = false;
+                }
             }
         }
 
@@ -199,11 +202,6 @@ public class BasicInteract : MonoBehaviour
                         interactiveObject.GetComponent<PickupThing>().CollectionEvent();
                     }
 
-                    if (interactiveObject.GetComponent<PickupThing>().isScoreItem == true)
-                    {
-                        interactiveObject.GetComponent<PickupThing>().AddScoreFromPickup();
-                    }
-
                     Destroy(interactiveObject); // REMOVE OBJECT FROM THE WORLD
                 }
                 else if (targetIsInteractive)
@@ -220,6 +218,7 @@ public class BasicInteract : MonoBehaviour
         Debug.Log("CarryObject called!");
         rbOfCarriedItem = interactiveObject.GetComponent<Rigidbody>();
         rbOfCarriedItem.useGravity = false;
+        rbOfCarriedItem.isKinematic = true;  // kinematic try
         carriedItem = interactiveObject;
         carryItemPosition.position = carryPoint.position;
         carryItemPosition.parent = carryPoint;
@@ -234,14 +233,22 @@ public class BasicInteract : MonoBehaviour
 
     void DropObject()
     {
-        Debug.Log("Drop object called!");
-        carriedItem.tag = ("Carryable");
-        rbOfCarriedItem.useGravity = true;
-        carryItemPosition.parent = null;
-        carriedItem = null;
+        d_ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Raycast From Mouse Position 
+        if (Physics.Raycast(d_ray, out dropHitObject, 1.13f, dropLayerToHit)) // RAYCAST IS HARD CODED - Change to match your Z distance on carryPoint
+        {
+            Debug.Log("Can't drop atm");
+        }
+        else
+        {
+            Debug.Log("Drop object called!");
+            carriedItem.tag = ("Carryable");
+            rbOfCarriedItem.useGravity = true;
+            rbOfCarriedItem.isKinematic = false;  // kinematic try
+            carryItemPosition.parent = null;
+            carriedItem = null;
 
-        carryPromptTxt.text = " ";
-
+            carryPromptTxt.text = " ";
+        }
     }
 
     void ResetPrompts()
@@ -264,8 +271,9 @@ public class BasicInteract : MonoBehaviour
     {
         onInvItemTaken?.Invoke(pickedUp.GetComponent<InvItemID>().ID); // ADD TO INVENTORY LIST
     }
-     public void CheckInteractCanvas()
-     {
+
+    public void CheckInteractCanvas()
+    {
         if (intPromptTxt.enabled == true)
         {
             doorPromptTxt.enabled = false;
@@ -290,5 +298,5 @@ public class BasicInteract : MonoBehaviour
             doorPromptTxt.enabled = false;
             collectPromptTxt.enabled = false;
         }
-     }
+    }
 }

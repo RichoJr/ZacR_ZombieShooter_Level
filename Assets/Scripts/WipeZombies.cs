@@ -43,6 +43,7 @@ public class WipeZombies : MonoBehaviour
     {
         // WARNING - This will wake ALL sleeping zombies, including any used in 'waiting traps'
         zombieList = GameObject.FindGameObjectsWithTag("Enemy");
+        enemy2List = GameObject.FindGameObjectsWithTag("EnemyStrong");
 
         foreach (GameObject z in zombieList)
         {
@@ -51,8 +52,18 @@ public class WipeZombies : MonoBehaviour
             nmaScript.TargetPlayer();
         }
 
+        foreach (GameObject z in enemy2List)
+        {
+            NavmeshAgentScript nmaScript = z.gameObject.GetComponent<NavmeshAgentScript>();
+            nmaScript.enabled = true;
+            nmaScript.TargetPlayer();
+        }
+
+
         Array.Clear(zombieList, 0, zombieList.Length);
         zombieList = null;
+        Array.Clear(enemy2List, 0, enemy2List.Length);
+        enemy2List = null;
     }
 
     public void SleepAllZombies()
